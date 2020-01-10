@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(image_undistort)
 
+set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Set compile flags (-Ofast actually makes a big difference over -O3 here (maybe 20% faster)
@@ -111,6 +112,13 @@ install(TARGETS ${PROJECT_NAME}_nodelet
   DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
+# Install node binary
+install(TARGETS
+  stereo_undistort_node
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 # Install header files
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
@@ -119,6 +127,10 @@ install(DIRECTORY include/${PROJECT_NAME}/
 # Install launch files
 install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+)
+
+install(DIRECTORY cam_params
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 # Install xml files
